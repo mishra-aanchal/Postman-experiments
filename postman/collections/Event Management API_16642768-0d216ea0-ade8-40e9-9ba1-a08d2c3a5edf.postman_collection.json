@@ -1,0 +1,721 @@
+{
+  "info": {
+    "_postman_id": "0d216ea0-ade8-40e9-9ba1-a08d2c3a5edf",
+    "name": "Event Management API",
+    "description": "API for managing events, venues, and registrations. This Express.js API provides endpoints for creating and retrieving events, managing venues, and handling event registrations.\n\n**Base URL:** `{{baseUrl}}` (default: `http://localhost:3000`)\n\n**API Documentation:** Available at `/api-docs` (Swagger UI)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "{{baseUrl}}/events",
+          "event": [
+            {
+              "id": "1c6f0277-bee6-49fe-ba9b-7584913a7336",
+              "listen": "test",
+              "script": {
+                "id": "5f4d660e-e6c9-4f5c-b0c5-d135c0633367",
+                "exec": [
+                  "// Get All Events - Test Script",
+                  "",
+                  "// Test 1: Validate HTTP status code",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Test 2: Validate response time is reasonable",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Test 3: Validate response is JSON",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.json();",
+                  "});",
+                  "",
+                  "// Test 4: Validate response is an array",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "",
+                  "// Test 5: Validate array items have required properties with correct types",
+                  "// pm.test(\"All events have required properties with correct types\", function () {",
+                  "//     const jsonData = pm.response.json();",
+                  "    ",
+                  "//     if (jsonData.length > 0) {",
+                  "//         jsonData.forEach((event, index) => {",
+                  "//             pm.expect(event).to.have.property('id', undefined, `Event at index ${index} missing 'id'`);",
+                  "//             pm.expect(event).to.have.property('name', undefined, `Event at index ${index} missing 'name'`);",
+                  "//             pm.expect(event).to.have.property('date', undefined, `Event at index ${index} missing 'date'`);",
+                  "//             pm.expect(event).to.have.property('venueId', undefined, `Event at index ${index} missing 'venueId'`);",
+                  "            ",
+                  "//             // Validate data types",
+                  "//             pm.expect(typeof event.id).to.be.oneOf(['string', 'number'], `Event id should be string or number`);",
+                  "//             pm.expect(event.name).to.be.a('string', `Event name should be a string`);",
+                  "//             pm.expect(event.date).to.be.a('string', `Event date should be a string`);",
+                  "//             pm.expect(typeof event.venueId).to.be.oneOf(['string', 'number'], `Event venueId should be string or number`);",
+                  "//         });",
+                  "//     }",
+                  "// });",
+                  "",
+                  "// Test 6: Validate JSON schema",
+                  "const eventsSchema = {",
+                  "    type: \"array\",",
+                  "    items: {",
+                  "        type: \"object\",",
+                  "        required: [\"id\", \"name\", \"date\", \"venueId\"],",
+                  "        properties: {",
+                  "            id: { type: [\"string\", \"number\", \"integer\"] },",
+                  "            name: { type: \"string\" },",
+                  "            date: { type: \"string\" },",
+                  "            venueId: { type: [\"string\", \"number\", \"integer\"] },",
+                  "            description: { type: \"string\" }",
+                  "        }",
+                  "    }",
+                  "};",
+                  "",
+                  "pm.test(\"Response matches JSON schema\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.response.to.have.jsonSchema(eventsSchema);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "c2b679c6-58ea-4b58-a9da-869e0f558eca",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            },
+            "description": "Generated from cURL: curl --request GET --url '{{baseUrl}}/events'"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Event by ID",
+          "event": [
+            {
+              "id": "b5a7c225-5b68-4e85-a763-df431278481d",
+              "listen": "test",
+              "script": {
+                "id": "ce864096-4888-4f87-98d8-69543a87ae09",
+                "exec": [
+                  "// Get Event by ID - Test Script",
+                  "",
+                  "// Test 1: Validate HTTP status code",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Test 2: Validate response time is reasonable",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Test 3: Validate response is JSON",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.json();",
+                  "});",
+                  "",
+                  "// Test 4: Validate response is an object",
+                  "pm.test(\"Response is an object\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('object');",
+                  "    pm.expect(jsonData).to.not.be.an('array');",
+                  "});",
+                  "",
+                  "// Test 5: Validate required properties exist",
+                  "pm.test(\"Event has required properties\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    pm.expect(jsonData).to.have.property('date');",
+                  "    pm.expect(jsonData).to.have.property('venueId');",
+                  "});",
+                  "",
+                  "// Test 6: Validate data types of properties",
+                  "pm.test(\"Event properties have correct data types\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(typeof jsonData.id).to.be.oneOf(['string', 'number']);",
+                  "    pm.expect(jsonData.name).to.be.a('string');",
+                  "    pm.expect(jsonData.date).to.be.a('string');",
+                  "    pm.expect(typeof jsonData.venueId).to.be.oneOf(['string', 'number']);",
+                  "});",
+                  "",
+                  "// Test 7: Validate JSON schema",
+                  "const eventSchema = {",
+                  "    type: \"object\",",
+                  "    required: [\"id\", \"name\", \"date\", \"venueId\"],",
+                  "    properties: {",
+                  "        id: { type: [\"string\", \"number\", \"integer\"] },",
+                  "        name: { type: \"string\" },",
+                  "        date: { type: \"string\" },",
+                  "        venueId: { type: [\"string\", \"number\", \"integer\"] },",
+                  "        description: { type: \"string\" }",
+                  "    }",
+                  "};",
+                  "",
+                  "pm.test(\"Response matches JSON schema\", function () {",
+                  "    pm.response.to.have.jsonSchema(eventSchema);",
+                  "});",
+                  "",
+                  "// Test 8: Test for 404 scenario (when status is 404)",
+                  "if (pm.response.code === 404) {",
+                  "    pm.test(\"404 response for invalid ID\", function () {",
+                  "        pm.response.to.have.status(404);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "1728b198-040e-4083-958d-7b9b954aa6b9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "The unique identifier of the event"
+                }
+              ]
+            },
+            "description": "Retrieves a specific event by its ID.\n\n**Path Parameters:**\n- `id` (required): The unique identifier of the event\n\n**Response:**\n- `200`: Event object\n- `404`: Event not found"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Event",
+          "event": [
+            {
+              "id": "39368bd9-e8fe-4c0f-8f84-69dd821568ce",
+              "listen": "test",
+              "script": {
+                "id": "d23c2241-0ddd-4dbd-8794-d14c4185a88a",
+                "exec": [
+                  "// Create Event Tests",
+                  "",
+                  "// Test 1: Status code is 201",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Test 2: Response time is less than 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Test 3: Validate response is JSON",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.json();",
+                  "});",
+                  "",
+                  "// Test 4: Response has id property",
+                  "pm.test(\"Response has id property\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "});",
+                  "",
+                  "// Test 5: Verify response matches input data",
+                  "pm.test(\"Response matches input data\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const requestBody = JSON.parse(pm.request.body.raw);",
+                  "    ",
+                  "    pm.expect(jsonData.name).to.eql(requestBody.name);",
+                  "    pm.expect(jsonData.date).to.eql(requestBody.date);",
+                  "    pm.expect(jsonData.venueId).to.eql(requestBody.venueId);",
+                  "    ",
+                  "    // Description is optional, only check if provided",
+                  "    if (requestBody.description) {",
+                  "        pm.expect(jsonData.description).to.eql(requestBody.description);",
+                  "    }",
+                  "});",
+                  "",
+                  "// Test 6: Validate data types",
+                  "pm.test(\"Response has correct data types\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(jsonData.id).to.be.a('string');",
+                  "    pm.expect(jsonData.name).to.be.a('string');",
+                  "    pm.expect(jsonData.date).to.be.a('string');",
+                  "    pm.expect(jsonData.venueId).to.be.a('string');",
+                  "    ",
+                  "    if (jsonData.description !== undefined) {",
+                  "        pm.expect(jsonData.description).to.be.a('string');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Test 7: Save eventId to environment variable for request chaining",
+                  "pm.test(\"Save eventId to environment variable\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"eventId\", jsonData.id);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "a85cfa50-f314-4559-a607-9242fe0f754c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Tech Conference 2024\",\n    \"date\": \"2024-09-15T09:00:00Z\",\n    \"venueId\": \"1\",\n    \"description\": \"A conference about the latest in technology.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            },
+            "description": "Creates a new event.\n\n**Request Body (required fields):**\n- `name` (string, required): Name of the event\n- `date` (string, required): ISO 8601 date/time of the event\n- `venueId` (string, required): ID of the venue\n- `description` (string, optional): Description of the event\n\n**Response:**\n- `201`: Created event object with generated `id`\n- `400`: Missing required fields"
+          },
+          "response": []
+        }
+      ],
+      "id": "bb205f46-d5ee-4296-b6db-25ced42ab0fa",
+      "description": "Endpoints for managing events"
+    },
+    {
+      "name": "Venues",
+      "item": [
+        {
+          "name": "{{baseUrl}}/venues",
+          "event": [
+            {
+              "id": "ee44c86c-b163-429b-a5e3-5a343374045a",
+              "listen": "test",
+              "script": {
+                "id": "263099c9-4e6d-4a9d-9635-41712a3f97e1",
+                "exec": [
+                  "// Get All Venues - Test Script",
+                  "",
+                  "// Test 1: Validate HTTP status code",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Test 2: Validate response time is reasonable",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Test 3: Validate response is JSON",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.json();",
+                  "});",
+                  "",
+                  "// Test 4: Validate response is an array",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "",
+                  "// Test 5: Validate array items have required properties with correct types",
+                  "// pm.test(\"All venues have required properties with correct types\", function () {",
+                  "//     const jsonData = pm.response.json();",
+                  "    ",
+                  "//     if (jsonData.length > 0) {",
+                  "//         jsonData.forEach((venue, index) => {",
+                  "//             pm.expect(venue).to.have.property('id', undefined, `Venue at index ${index} missing 'id'`);",
+                  "//             pm.expect(venue).to.have.property('name', undefined, `Venue at index ${index} missing 'name'`);",
+                  "//             pm.expect(venue).to.have.property('address', undefined, `Venue at index ${index} missing 'address'`);",
+                  "            ",
+                  "//             // Validate data types",
+                  "//             pm.expect(typeof venue.id).to.be.oneOf(['string', 'number'], `Venue id should be string or number`);",
+                  "//             pm.expect(venue.name).to.be.a('string', `Venue name should be a string`);",
+                  "//             pm.expect(venue.address).to.be.a('string', `Venue address should be a string`);",
+                  "            ",
+                  "//             // Optional capacity field validation",
+                  "//             if (venue.hasOwnProperty('capacity')) {",
+                  "//                 pm.expect(venue.capacity).to.be.a('number', `Venue capacity should be a number`);",
+                  "//             }",
+                  "//         });",
+                  "//     }",
+                  "// });",
+                  "",
+                  "// Test 6: Validate JSON schema",
+                  "const venuesSchema = {",
+                  "    type: \"array\",",
+                  "    items: {",
+                  "        type: \"object\",",
+                  "        required: [\"id\", \"name\", \"address\"],",
+                  "        properties: {",
+                  "            id: { type: [\"string\", \"number\", \"integer\"] },",
+                  "            name: { type: \"string\" },",
+                  "            address: { type: \"string\" },",
+                  "            capacity: { type: [\"number\", \"integer\"] }",
+                  "        }",
+                  "    }",
+                  "};",
+                  "",
+                  "pm.test(\"Response matches JSON schema\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.response.to.have.jsonSchema(venuesSchema);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "3a9cc2cd-00a5-4f39-bd91-887afa6d756a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/venues",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "venues"
+              ]
+            },
+            "description": "Generated from cURL: curl --request GET --url '{{baseUrl}}/venues'"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Venue",
+          "event": [
+            {
+              "id": "e146ee6f-60ae-4d77-b593-f0e4b5eb76ac",
+              "listen": "test",
+              "script": {
+                "id": "baafe734-8894-4827-9b46-501c3e99b6b7",
+                "exec": [
+                  "// Create Venue - Test Script",
+                  "",
+                  "// Test 1: Validate HTTP status code",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Test 2: Validate response time is reasonable",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Test 3: Validate response is JSON",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.json();",
+                  "});",
+                  "",
+                  "// Test 4: Validate response contains id",
+                  "pm.test(\"Response contains id\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "});",
+                  "",
+                  "// Test 5: Validate response has required properties",
+                  "pm.test(\"Response has required properties\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    pm.expect(jsonData).to.have.property('address');",
+                  "});",
+                  "",
+                  "// Test 6: Validate data types",
+                  "pm.test(\"Response properties have correct data types\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(typeof jsonData.id).to.be.oneOf(['string', 'number']);",
+                  "    pm.expect(jsonData.name).to.be.a('string');",
+                  "    pm.expect(jsonData.address).to.be.a('string');",
+                  "    ",
+                  "    if (jsonData.hasOwnProperty('capacity')) {",
+                  "        pm.expect(jsonData.capacity).to.be.a('number');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Test 7: Validate created data matches input",
+                  "pm.test(\"Created venue matches input data\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const requestBody = JSON.parse(pm.request.body.raw);",
+                  "    ",
+                  "    pm.expect(jsonData.name).to.eql(requestBody.name);",
+                  "    pm.expect(jsonData.address).to.eql(requestBody.address);",
+                  "    ",
+                  "    if (requestBody.hasOwnProperty('capacity')) {",
+                  "        pm.expect(jsonData.capacity).to.eql(requestBody.capacity);",
+                  "    }",
+                  "});",
+                  "",
+                  "// Test 8: Validate JSON schema",
+                  "const venueSchema = {",
+                  "    type: \"object\",",
+                  "    required: [\"id\", \"name\", \"address\"],",
+                  "    properties: {",
+                  "        id: { type: [\"string\", \"number\", \"integer\"] },",
+                  "        name: { type: \"string\" },",
+                  "        address: { type: \"string\" },",
+                  "        capacity: { type: [\"number\", \"integer\"] }",
+                  "    }",
+                  "};",
+                  "",
+                  "pm.test(\"Response matches JSON schema\", function () {",
+                  "    pm.response.to.have.jsonSchema(venueSchema);",
+                  "});",
+                  "",
+                  "// Save venueId to environment variable for request chaining",
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData.id) {",
+                  "    pm.environment.set(\"venueId\", jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "4bb00b14-00cb-4f28-8a9e-c8c4d09a0260",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Convention Center\",\n    \"address\": \"123 Main St, Tech City\",\n    \"capacity\": 5000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/venues",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "venues"
+              ]
+            },
+            "description": "Creates a new venue.\n\n**Request Body (required fields):**\n- `name` (string, required): Name of the venue\n- `address` (string, required): Address of the venue\n- `capacity` (number, optional): Maximum capacity (defaults to 0)\n\n**Response:**\n- `201`: Created venue object with generated `id`\n- `400`: Missing required fields"
+          },
+          "response": []
+        }
+      ],
+      "id": "420e4f20-3212-400f-80d7-e6e06b862a07",
+      "description": "Endpoints for managing venues"
+    },
+    {
+      "name": "Registrations",
+      "item": [
+        {
+          "name": "Create Registration",
+          "event": [
+            {
+              "id": "ba1965d2-c596-4602-965c-3b5b7b2eb7ab",
+              "listen": "test",
+              "script": {
+                "id": "19ffebb1-de00-4c99-a6b4-935a408a6509",
+                "exec": [
+                  "// Create Registration Tests",
+                  "",
+                  "// Test 1: Status code is 201",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Test 2: Response time is less than 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Test 3: Validate response is JSON",
+                  "// pm.test(\"Response is JSON\", function () {",
+                  "//     pm.response.to.be.json();",
+                  "// });",
+                  "",
+                  "// Test 4: Response has id property",
+                  "pm.test(\"Response has id property\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "});",
+                  "",
+                  "// Test 5: Verify response matches input data",
+                  "pm.test(\"Response matches input data\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const requestBody = JSON.parse(pm.request.body.raw);",
+                  "    ",
+                  "    pm.expect(jsonData.eventId).to.eql(requestBody.eventId);",
+                  "    pm.expect(jsonData.userEmail).to.eql(requestBody.userEmail);",
+                  "});",
+                  "",
+                  "// Test 6: Validate data types",
+                  "pm.test(\"Response has correct data types\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(jsonData.id).to.be.a('string');",
+                  "    pm.expect(jsonData.eventId).to.be.a('string');",
+                  "    pm.expect(jsonData.userEmail).to.be.a('string');",
+                  "    ",
+                  "    // registeredAt should be a valid timestamp string",
+                  "    if (jsonData.registeredAt !== undefined) {",
+                  "        pm.expect(jsonData.registeredAt).to.be.a('string');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Test 7: Save registrationId to environment variable",
+                  "pm.test(\"Save registrationId to environment variable\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"registrationId\", jsonData.id);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "0436f8b1-d966-4f08-834a-f923ee8ca426",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"eventId\": \"1\",\n    \"userEmail\": \"user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/registrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "registrations"
+              ]
+            },
+            "description": "Creates a new registration for an event.\n\n**Request Body (required fields):**\n- `eventId` (string, required): ID of the event to register for\n- `userEmail` (string, required): Email address of the user\n\n**Response:**\n- `201`: Created registration object with generated `id` and `registeredAt` timestamp\n- `400`: Missing required fields"
+          },
+          "response": []
+        }
+      ],
+      "id": "7ff45dd0-a4ff-4c13-9997-4a4aa9cddde1",
+      "description": "Endpoints for managing event registrations"
+    },
+    {
+      "name": "Health Check",
+      "event": [
+        {
+          "id": "f0ca5351-c942-443a-ba72-f2279bfa1fcf",
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Health Check Tests",
+              "",
+              "// Test 1: Status code is 200",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "// Test 2: Response time is less than 2000ms",
+              "pm.test(\"Response time is less than 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "// Test 3: Validate response structure has message property",
+              "pm.test(\"Response has message property\", function () {",
+              "    const responseText = pm.response.text();",
+              "    pm.expect(responseText).to.be.a('string');",
+              "    pm.expect(responseText.length).to.be.greaterThan(0);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "id": "d385dc65-82e6-4556-86b4-a2b88a7c66d2",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ""
+          ]
+        },
+        "description": "Health check endpoint to verify the API is running.\n\n**Response:** Text message confirming the API is running."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
