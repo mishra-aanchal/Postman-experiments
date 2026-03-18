@@ -1,0 +1,14 @@
+{
+  "workspace": {
+    "id": "29627e86-95b0-402c-8091-154d781c754c"
+  },
+  "entities": {
+    "collections": [
+      "../postman/collections/Event Management API_16642768-0d216ea0-ade8-40e9-9ba1-a08d2c3a5edf.postman_collection.json"
+    ],
+    "environments": [],
+    "specs": [],
+    "flows": [],
+    "globals": []
+  }
+}
